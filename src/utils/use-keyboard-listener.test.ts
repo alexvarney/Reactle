@@ -1,8 +1,5 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-import {
-  useKeyboardListener,
-  TKeyEventCallback,
-} from "./use-keyboard-listener";
+import { renderHook } from "@testing-library/react-hooks";
+import { useKeyboardListener } from "./use-keyboard-listener";
 import userEvent from "@testing-library/user-event";
 
 describe("useKeyboardListener", () => {

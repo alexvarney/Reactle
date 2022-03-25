@@ -13,7 +13,7 @@ interface IGameState {
   current: string;
 }
 
-const initialGameState: IGameState = {
+export const initialGameState: IGameState = {
   previous: [],
   current: "",
 };

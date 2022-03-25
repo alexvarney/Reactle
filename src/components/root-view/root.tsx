@@ -1,8 +1,9 @@
 import "./style.css";
-import { useGameState } from "../../utils/use-game-state";
+
+import { useGameContext } from "../../utils/use-game-context";
 
 const Root = () => {
-  const inputState = useGameState();
+  const inputState = useGameContext();
 
   return (
     <div className="App">
