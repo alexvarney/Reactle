@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { GameGrid } from "../game-grid";
 import { useDispatch } from "../../utils/use-game-context";
 import { getInitialWord } from "../../utils/get-initial-word";
-
+import { Keyboard } from "../keyboard";
 const Root = () => {
   const dispatch = useDispatch();
 
@@ -22,6 +22,7 @@ const Root = () => {
   return (
     <div className="container">
       <GameGrid />
+      <Keyboard />
     </div>
   );
 };

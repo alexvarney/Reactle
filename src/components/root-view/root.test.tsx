@@ -22,17 +22,19 @@ describe("Root View", () => {
     render(<RootView />);
 
     userEvent.keyboard("abcd");
-    expect(screen.getByText(/A/i)).toBeInTheDocument();
-    expect(screen.getByText(/B/i)).toBeInTheDocument();
-    expect(screen.getByText(/C/i)).toBeInTheDocument();
-    expect(screen.getByText(/D/i)).toBeInTheDocument();
+    expect(screen.getByText(/A/i, { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText(/B/i, { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText(/C/i, { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText(/D/i, { selector: "span" })).toBeInTheDocument();
 
     userEvent.keyboard("{Backspace}");
 
-    expect(screen.getByText(/A/i)).toBeInTheDocument();
-    expect(screen.getByText(/B/i)).toBeInTheDocument();
-    expect(screen.getByText(/C/i)).toBeInTheDocument();
-    expect(screen.queryByText(/D/i)).not.toBeInTheDocument();
+    expect(screen.getByText(/A/i, { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText(/B/i, { selector: "span" })).toBeInTheDocument();
+    expect(screen.getByText(/C/i, { selector: "span" })).toBeInTheDocument();
+    expect(
+      screen.queryByText(/D/i, { selector: "span" })
+    ).not.toBeInTheDocument();
   });
 
   it("renders green for correct letter states", () => {
@@ -41,7 +43,9 @@ describe("Root View", () => {
     userEvent.keyboard("value");
     userEvent.keyboard("{Enter}");
 
-    const elements = Array.from("value").map((char) => screen.getByText(char));
+    const elements = Array.from("value").map((char) =>
+      screen.getByText(char, { selector: "span" })
+    );
 
     elements.forEach((element) => expect(element).toHaveClass("letter--valid"));
   });
@@ -52,7 +56,9 @@ describe("Root View", () => {
     userEvent.keyboard("merit");
     userEvent.keyboard("{Enter}");
 
-    const elements = Array.from("merit").map((char) => screen.getByText(char));
+    const elements = Array.from("merit").map((char) =>
+      screen.getByText(char, { selector: "span" })
+    );
 
     expect(elements[0]).toHaveClass("letter--invalid");
     expect(elements[1]).toHaveClass("letter--misplace");
@@ -61,12 +67,14 @@ describe("Root View", () => {
     expect(elements[4]).toHaveClass("letter--invalid");
   });
 
-  it("renders correct state for unconfirmed letters ", () => {
+  it("renders correct state for unconfirmed letters", () => {
     render(<RootView />);
 
     userEvent.keyboard("value");
 
-    const elements = Array.from("value").map((char) => screen.getByText(char));
+    const elements = Array.from("value").map((char) =>
+      screen.getByText(char, { selector: "span" })
+    );
 
     elements.forEach((element) =>
       expect(element).toHaveClass("letter--current")

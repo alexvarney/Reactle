@@ -1,5 +1,5 @@
-const lower = "abcdefghijklmnopqrstuvwxyz";
+export const LOWER_ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
-export const ALPHABET = lower + lower.toUpperCase();
+export const ALPHABET = LOWER_ALPHABET + LOWER_ALPHABET.toUpperCase();
 export const WORD_LENGTH = 5;
 export const NUM_GUESSES = 6;
