@@ -9,12 +9,8 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
 }) => {
   const state = useGameContext();
 
-  const { previous, current, target } = state;
-
   const isPrevious = state.previous.length > row;
   const isCurrent = state.previous.length === row;
-
-  console.log(previous, current, target);
 
   const value = useMemo(() => {
     if (isPrevious) {
@@ -27,8 +23,6 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
   }, [isPrevious, isCurrent, state, letter, row]);
 
   const letterState: LetterStates = useMemo(() => {
-    console.log(state.target);
-
     if (isCurrent && !!value) return "current";
 
     if (isPrevious) {
