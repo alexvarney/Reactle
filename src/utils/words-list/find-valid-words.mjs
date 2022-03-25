@@ -12,10 +12,6 @@ for (const key in data) {
   }
 }
 
-// for (const key in validWords) {
-//   console.log(key);
-// }
-
 const allOutput = JSON.stringify(validWords);
 
 await fs.writeFile("./valid-words.json", allOutput);

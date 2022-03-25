@@ -6,8 +6,6 @@ describe("useGameState", () => {
   it("ignores inputs after the fifth letter of the word", () => {
     const { result } = renderHook(() => useGameState());
 
-    console.log(result.current);
-
     userEvent.keyboard("abcdefghijk");
 
     expect(result.current.state.current).toEqual("abcde");

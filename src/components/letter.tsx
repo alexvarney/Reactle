@@ -25,28 +25,19 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
   const letterState: LetterStates = useMemo(() => {
     if (isCurrent && !!value) return "current";
 
-    if (isPrevious) {
-      const word = Array.from(state.previous[row]);
+    if (!isPrevious) return "empty";
 
-      if (word[letter] === state.target.charAt(letter)) {
-        return "valid";
-      }
+    const word = Array.from(state.previous[row]);
 
-      if (Array.from(state.target).includes(word[letter])) {
-        console.log(`misplace: ${word[letter]}`);
-
-        return "misplace";
-      }
-
-      return "invalid";
+    if (word[letter] === state.target.charAt(letter)) {
+      return "valid";
     }
 
-    return "empty";
+    if (Array.from(state.target).includes(word[letter])) {
+      return "misplace";
+    }
+    return "invalid";
   }, [isCurrent, value, state.previous, state.target, isPrevious, letter, row]);
 
-  return (
-    <div className={`letter letter--${letterState}`}>
-      <span>{value}</span>
-    </div>
-  );
+  return <span className={`letter letter--${letterState}`}>{value}</span>;
 };

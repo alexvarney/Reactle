@@ -2,24 +2,20 @@ import "./style.css";
 import { useEffect } from "react";
 import { GameGrid } from "../game-grid";
 import { useDispatch } from "../../utils/use-game-context";
-import COMMON_WORDS from "../../utils/words-list/common-words.json";
+import { getInitialWord } from "../../utils/get-initial-word";
 
 const Root = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const words = Object.keys(COMMON_WORDS);
-
-    const randomWordIndex = Math.floor(Math.random() * words.length + 1);
-
-    const selectedWord = words[randomWordIndex];
+    const word = getInitialWord();
 
     //TODO: remove this, come up with a determininstic (time based?) way to choose the word
-    console.log(`Selecting ${selectedWord}`);
+    console.log(`Selecting ${word}`);
 
     dispatch({
       type: "set-target",
-      value: selectedWord,
+      value: word,
     });
   }, [dispatch]);
 
