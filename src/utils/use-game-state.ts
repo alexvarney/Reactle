@@ -1,6 +1,7 @@
 import { useCallback, useReducer } from "react";
 import { useKeyboardListener } from "./use-keyboard-listener";
 import { WORD_LENGTH } from "./constants";
+import VALID_WORDS from "./words-list/valid-words.json";
 
 interface IGameStateAction {
   type: "append" | "backspace" | "confirm";
@@ -33,7 +34,11 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
         current: state.current.slice(0, -1),
       };
     case "confirm":
-      if (state.current.length !== WORD_LENGTH) return state;
+      if (
+        state.current.length !== WORD_LENGTH ||
+        !(VALID_WORDS as Record<string, number>)[state.current]
+      )
+        return state;
 
       return {
         previous: [...state.previous, state.current],
