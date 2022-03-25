@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useGameState } from "../utils/use-game-state";
+import { useGameContext } from "../utils/use-game-context";
 
 type LetterStates = "empty" | "current" | "valid" | "misplace" | "invalid";
 
@@ -7,31 +7,38 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
   row,
   letter,
 }) => {
-  const gameState = useGameState();
-  const isPrevious = gameState.previous.length > row;
-  const isCurrent = gameState.previous.length === row;
+  const state = useGameContext();
+
+  const { previous, current, target } = state;
+
+  const isPrevious = state.previous.length > row;
+  const isCurrent = state.previous.length === row;
+
+  console.log(previous, current, target);
 
   const value = useMemo(() => {
     if (isPrevious) {
-      return gameState.previous[row]?.charAt(letter) ?? "";
+      return state.previous[row]?.charAt(letter) ?? "";
     } else if (isCurrent) {
-      return gameState.current.charAt(letter);
+      return state.current.charAt(letter);
     }
 
     return "";
-  }, [isPrevious, isCurrent, gameState, letter, row]);
+  }, [isPrevious, isCurrent, state, letter, row]);
 
-  const state: LetterStates = useMemo(() => {
+  const letterState: LetterStates = useMemo(() => {
+    console.log(state.target);
+
     if (isCurrent && !!value) return "current";
 
     if (isPrevious) {
-      const word = Array.from(gameState.previous[row]);
+      const word = Array.from(state.previous[row]);
 
-      if (word[letter] === gameState.target.charAt(letter)) {
+      if (word[letter] === state.target.charAt(letter)) {
         return "valid";
       }
 
-      if (Array.from(gameState.target).includes(word[letter])) {
+      if (Array.from(state.target).includes(word[letter])) {
         console.log(`misplace: ${word[letter]}`);
 
         return "misplace";
@@ -41,18 +48,10 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
     }
 
     return "empty";
-  }, [
-    isCurrent,
-    value,
-    gameState.previous,
-    gameState.target,
-    isPrevious,
-    letter,
-    row,
-  ]);
+  }, [isCurrent, value, state.previous, state.target, isPrevious, letter, row]);
 
   return (
-    <div className={`letter letter--${state}`}>
+    <div className={`letter letter--${letterState}`}>
       <span>{value}</span>
     </div>
   );

@@ -5,7 +5,7 @@ export const GameGrid = () => {
   return (
     <div className="main-grid">
       {Array.from({ length: NUM_GUESSES }).map((_, idx) => (
-        <WordRow index={idx} />
+        <WordRow key={idx} index={idx} />
       ))}
     </div>
   );
@@ -13,10 +13,14 @@ export const GameGrid = () => {
 
 export const WordRow: React.FC<{ index: number }> = ({ index }) => {
   return (
-    <p className="word-row">
+    <div className="word-row">
       {Array.from({ length: WORD_LENGTH }).map((_, letterIndex) => (
-        <Letter row={index} letter={letterIndex} />
+        <Letter
+          key={`${index}-${letterIndex}`}
+          row={index}
+          letter={letterIndex}
+        />
       ))}
-    </p>
+    </div>
   );
 };

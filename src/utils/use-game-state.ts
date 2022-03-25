@@ -3,8 +3,8 @@ import { useKeyboardListener } from "./use-keyboard-listener";
 import { WORD_LENGTH } from "./constants";
 import VALID_WORDS from "./words-list/valid-words.json";
 
-interface IGameStateAction {
-  type: "append" | "backspace" | "confirm";
+export interface IGameStateAction {
+  type: "append" | "backspace" | "confirm" | "set-target";
   value?: string;
 }
 
@@ -17,7 +17,7 @@ interface IGameState {
 export const initialGameState: IGameState = {
   previous: [],
   current: "",
-  target: "tests",
+  target: "",
 };
 
 const stateReducer = (state: IGameState, action: IGameStateAction) => {
@@ -48,6 +48,11 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
         previous: [...state.previous, state.current],
         current: "",
       };
+    case "set-target":
+      return {
+        ...state,
+        target: action.value?.toLowerCase() ?? "",
+      };
   }
 };
 
@@ -70,5 +75,5 @@ export const useGameState = () => {
 
   useKeyboardListener(onKeyUp, onBackspace, onEnter);
 
-  return state;
+  return { state, dispatch };
 };
