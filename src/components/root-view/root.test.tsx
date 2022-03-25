@@ -60,4 +60,16 @@ describe("Root View", () => {
     expect(elements[3]).toHaveClass("letter--invalid");
     expect(elements[4]).toHaveClass("letter--invalid");
   });
+
+  it("renders correct state for unconfirmed letters ", () => {
+    render(<RootView />);
+
+    userEvent.keyboard("value");
+
+    const elements = Array.from("value").map((char) => screen.getByText(char));
+
+    elements.forEach((element) =>
+      expect(element).toHaveClass("letter--current")
+    );
+  });
 });

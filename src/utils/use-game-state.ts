@@ -49,8 +49,6 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
         current: "",
       };
     case "set-target":
-      console.warn("setting target: " + action.value);
-
       return {
         ...state,
         target: action.value?.toLowerCase() ?? "",
