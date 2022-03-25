@@ -9,7 +9,7 @@ describe("useKeyboardListener", () => {
   it("should call the callback function when a key is pressed", () => {
     const fn = jest.fn();
 
-    renderHook(() => useKeyboardListener(fn));
+    renderHook(() => useKeyboardListener(fn, jest.fn(), jest.fn()));
 
     userEvent.keyboard("test");
 
@@ -19,7 +19,7 @@ describe("useKeyboardListener", () => {
   it("should only call the callback for upper and lower characters in the latin alphabet", () => {
     let fn = jest.fn();
 
-    renderHook(() => useKeyboardListener(fn));
+    renderHook(() => useKeyboardListener(fn, jest.fn(), jest.fn()));
 
     userEvent.keyboard(";;;;");
 
@@ -31,7 +31,7 @@ describe("useKeyboardListener", () => {
 
     fn = jest.fn();
 
-    renderHook(() => useKeyboardListener(fn));
+    renderHook(() => useKeyboardListener(fn, jest.fn(), jest.fn()));
 
     expect(fn).toHaveBeenCalledTimes(0);
 
@@ -41,16 +41,20 @@ describe("useKeyboardListener", () => {
   });
 
   it("should fire when the backspace key is pressed", () => {
-    let fn = jest.fn();
+    let keyUp = jest.fn();
+    let backspace = jest.fn();
+    let enter = jest.fn();
 
-    renderHook(() => useKeyboardListener(fn));
+    renderHook(() => useKeyboardListener(keyUp, backspace, enter));
 
     userEvent.keyboard("{Backspace}");
 
-    expect(fn).toBeCalledTimes(1);
+    expect(backspace).toBeCalledTimes(1);
+    expect(keyUp).toHaveBeenCalledTimes(0);
 
     userEvent.keyboard("ab.C_d{Backspace}");
 
-    expect(fn).toBeCalledTimes(6);
+    expect(backspace).toBeCalledTimes(2);
+    expect(keyUp).toBeCalledTimes(4);
   });
 });
