@@ -33,4 +33,18 @@ describe("useGameState", () => {
     expect(result.current.previous).not.toContain("asdfg");
     expect(result.current.current).toEqual("asdfg");
   });
+
+  it("should only accept a word once", () => {
+    const { result } = renderHook(() => useGameState());
+    userEvent.keyboard("hello");
+    userEvent.keyboard("{Enter}");
+
+    userEvent.keyboard("hello");
+    userEvent.keyboard("{Enter}");
+
+    userEvent.keyboard("hello");
+    userEvent.keyboard("{Enter}");
+
+    expect(result.current.previous.length).toBe(1);
+  });
 });

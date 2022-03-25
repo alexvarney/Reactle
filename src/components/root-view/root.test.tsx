@@ -14,11 +14,17 @@ describe("Root View", () => {
   it("captures keyboard events and updates state as user types", () => {
     render(<RootView />);
 
-    userEvent.keyboard("test");
-    expect(screen.getByText(/test/i)).toBeInTheDocument();
+    userEvent.keyboard("abcd");
+    expect(screen.getByText(/A/i)).toBeInTheDocument();
+    expect(screen.getByText(/B/i)).toBeInTheDocument();
+    expect(screen.getByText(/C/i)).toBeInTheDocument();
+    expect(screen.getByText(/D/i)).toBeInTheDocument();
 
     userEvent.keyboard("{Backspace}");
 
-    expect(screen.getByText(/tes/i)).toBeInTheDocument();
+    expect(screen.getByText(/A/i)).toBeInTheDocument();
+    expect(screen.getByText(/B/i)).toBeInTheDocument();
+    expect(screen.getByText(/C/i)).toBeInTheDocument();
+    expect(screen.queryByText(/D/i)).not.toBeInTheDocument();
   });
 });

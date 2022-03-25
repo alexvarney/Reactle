@@ -1,0 +1,68 @@
+.container {
+  padding: 2rem 0;
+  border: 1px solid green;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+
+  --near-black: #1c1c1c;
+  --gray-dark: #383838;
+  --gray-light: #cacaca;
+  --light: #f2f2f2;
+  --green: #58b358;
+  --yellow: #bfae11;
+}
+
+.main-grid {
+  width: clamp(150px, 66vw, 500px);
+  display: grid;
+  gap: 0.33rem;
+}
+
+.word-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.33rem;
+}
+
+.letter {
+  border: 3px solid var(--gray-light);
+  border-radius: 3px;
+
+  aspect-ratio: 1;
+  text-align: center;
+  justify-self: stretch;
+  vertical-align: middle;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  text-transform: uppercase;
+
+  color: var(--gray-dark);
+  user-select: none;
+}
+
+.letter--current {
+  border: 3px solid var(--gray-dark);
+  color: var(--gray-dark);
+
+  transition: all 0.2s;
+}
+
+.letter--valid {
+  color: var(--light);
+  background-color: var(--green);
+  border-color: var(--green);
+}
+.letter--misplace {
+  color: var(--light);
+  background-color: var(--yellow);
+  border-color: var(--yellow);
+}
+.letter--invalid {
+  color: var(--light);
+  background-color: var(--gray-dark);
+  border-color: var(--gray-dark);
+}

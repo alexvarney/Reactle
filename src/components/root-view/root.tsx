@@ -1,16 +1,10 @@
 import "./style.css";
 
-import { useGameContext } from "../../utils/use-game-context";
-
+import { GameGrid } from "../game-grid";
 const Root = () => {
-  const inputState = useGameContext();
-
   return (
-    <div className="App">
-      {inputState.previous.map((value) => (
-        <p>{value}</p>
-      ))}
-      <p>{inputState.current}</p>
+    <div className="container">
+      <GameGrid />
     </div>
   );
 };

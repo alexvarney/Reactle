@@ -9,6 +9,7 @@ interface IGameStateAction {
 }
 
 interface IGameState {
+  target: string;
   previous: string[];
   current: string;
 }
@@ -16,6 +17,7 @@ interface IGameState {
 export const initialGameState: IGameState = {
   previous: [],
   current: "",
+  target: "tests",
 };
 
 const stateReducer = (state: IGameState, action: IGameStateAction) => {
@@ -25,7 +27,7 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
         ...state,
         current:
           state.current.length < WORD_LENGTH
-            ? state.current + action.value
+            ? state.current + action.value?.toLowerCase()
             : state.current,
       };
     case "backspace":
@@ -36,11 +38,13 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
     case "confirm":
       if (
         state.current.length !== WORD_LENGTH ||
-        !(VALID_WORDS as Record<string, number>)[state.current]
+        !(VALID_WORDS as Record<string, number>)[state.current] ||
+        state.previous.includes(state.current)
       )
         return state;
 
       return {
+        ...state,
         previous: [...state.previous, state.current],
         current: "",
       };
