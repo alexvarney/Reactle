@@ -1,3 +1,5 @@
+import { INITIAL_DATE } from "./constants";
+
 const treatAsUTC = (date: Date) => {
   const result = new Date(date);
   result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
@@ -11,4 +13,8 @@ export const daysBetween = (startDate: Date, endDate: Date) => {
   const end = treatAsUTC(endDate).getTime();
 
   return Math.floor((end - start) / millisecondsPerDay);
+};
+
+export const daysSinceInitial = () => {
+  return daysBetween(INITIAL_DATE, new Date(Date.now()));
 };

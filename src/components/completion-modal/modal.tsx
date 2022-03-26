@@ -1,8 +1,9 @@
-import { useMemo, useCallback } from "react";
+import { useCallback } from "react";
 import { NUM_GUESSES, TCompletionState } from "../../utils/constants";
 import { getEmojiView } from "../../utils/emoji-view";
 import { useGameContext } from "../../utils/use-game-context";
 import "./modal.css";
+import { daysSinceInitial } from "../../utils/time-utils";
 
 const useCompletionState = (): TCompletionState => {
   const state = useGameContext();
@@ -17,7 +18,9 @@ export const CompletionModal: React.FC = () => {
   const completionState = useCompletionState();
 
   const shareEmojiView = useCallback(() => {
-    navigator.clipboard.writeText(getEmojiView(state, completionState, 1));
+    navigator.clipboard.writeText(
+      getEmojiView(state, completionState, daysSinceInitial() + 1)
+    );
   }, [state, completionState]);
 
   if (completionState === "incomplete") return null;
@@ -56,8 +59,6 @@ const SolvedModalContent = () => {
 };
 
 const FailedModalContent = () => {
-  const state = useGameContext();
-
   return (
     <>
       <h2>Nice Try!</h2>
