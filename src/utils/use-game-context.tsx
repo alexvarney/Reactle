@@ -2,29 +2,30 @@ import { createContext, useContext } from "react";
 import {
   useGameState,
   initialGameState,
-  IGameStateAction,
+  IUseGameStateActions,
 } from "./use-game-state";
 
 const GameContext = createContext(initialGameState);
 
-const GameDispatch = createContext(
-  ((x) => null) as React.Dispatch<IGameStateAction>
-);
+const GameActions = createContext<IUseGameStateActions>({
+  setTarget: (x: string) => undefined,
+  handleKeyEvent: (x: string) => undefined,
+});
 
 export const useGameContext = () => {
   return useContext(GameContext);
 };
 
-export const useDispatch = () => {
-  return useContext(GameDispatch);
+export const useActions = () => {
+  return useContext(GameActions);
 };
 
 export const GameContextProvider: React.FC = ({ children }) => {
-  const { state, dispatch } = useGameState();
+  const { state, actions } = useGameState();
 
   return (
     <GameContext.Provider value={state}>
-      <GameDispatch.Provider value={dispatch}>{children}</GameDispatch.Provider>
+      <GameActions.Provider value={actions}>{children}</GameActions.Provider>
     </GameContext.Provider>
   );
 };

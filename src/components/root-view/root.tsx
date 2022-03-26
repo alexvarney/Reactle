@@ -1,11 +1,11 @@
 import "./style.css";
 import { useEffect } from "react";
 import { GameGrid } from "../game-grid";
-import { useDispatch } from "../../utils/use-game-context";
+import { useActions } from "../../utils/use-game-context";
 import { getInitialWord } from "../../utils/get-initial-word";
 import { Keyboard } from "../keyboard";
 const Root = () => {
-  const dispatch = useDispatch();
+  const { setTarget, handleKeyEvent } = useActions();
 
   useEffect(() => {
     const word = getInitialWord();
@@ -13,16 +13,16 @@ const Root = () => {
     //TODO: remove this, come up with a determininstic (time based?) way to choose the word
     console.log(`Selecting ${word}`);
 
-    dispatch({
-      type: "set-target",
-      value: word,
-    });
-  }, [dispatch]);
+    setTarget(word);
+  }, [setTarget]);
 
   return (
     <div className="container">
+      <header>
+        <h1>Reactle</h1>
+      </header>
       <GameGrid />
-      <Keyboard />
+      <Keyboard onClick={handleKeyEvent} />
     </div>
   );
 };

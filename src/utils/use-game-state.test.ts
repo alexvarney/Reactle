@@ -55,7 +55,7 @@ describe("useGameState", () => {
   it("should allow setting the target word", () => {
     const { result } = renderHook(() => useGameState());
 
-    act(() => result.current.dispatch({ type: "set-target", value: "hello" }));
+    act(() => result.current.actions.setTarget("hello"));
     expect(result.current.state.target).toEqual("hello");
   });
 });

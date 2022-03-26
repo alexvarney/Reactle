@@ -1,9 +1,7 @@
-import React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Root from "./root";
 import { GameContextProvider } from "../../utils/use-game-context";
-//import {getInitialWord} from '../../utils/get-initial-word';
 
 const RootView = () => (
   <GameContextProvider>
@@ -13,7 +11,7 @@ const RootView = () => (
 
 jest.mock("../../utils/get-initial-word", () => {
   return {
-    getInitialWord: () => "value",
+    getInitialWord: () => "tests",
   };
 });
 
@@ -40,44 +38,114 @@ describe("Root View", () => {
   it("renders green for correct letter states", () => {
     render(<RootView />);
 
-    userEvent.keyboard("value");
+    userEvent.keyboard("tests");
     userEvent.keyboard("{Enter}");
 
-    const elements = Array.from("value").map((char) =>
-      screen.getByText(char, { selector: "span" })
-    );
+    const elements = Array.from("tests")
+      .map((char) => screen.queryAllByText(char, { selector: "span" }))
+      .reduce((acc, elementArr) => {
+        return [...acc, ...elementArr];
+      }, []);
 
     elements.forEach((element) => expect(element).toHaveClass("letter--valid"));
   });
 
   it("renders yellow for correct letters in incorrect places", () => {
+    //test case of TESTS -> RESET will check that the second E renders as invalid (not misplace) since it's already been placed correctly
+
     render(<RootView />);
 
-    userEvent.keyboard("merit");
+    userEvent.keyboard("reset");
     userEvent.keyboard("{Enter}");
 
-    const elements = Array.from("merit").map((char) =>
-      screen.getByText(char, { selector: "span" })
-    );
+    const selector = ".word-row:first-child > span.letter";
+
+    const r = screen.queryByText(/r/i, {
+      selector,
+    });
+
+    const e = screen.queryAllByText(/e/i, {
+      selector,
+    });
+    const s = screen.queryByText(/s/i, {
+      selector,
+    });
+    const t = screen.queryByText(/t/i, {
+      selector,
+    });
+
+    const elements = [r, e[0], s, e[1], t];
 
     expect(elements[0]).toHaveClass("letter--invalid");
-    expect(elements[1]).toHaveClass("letter--misplace");
-    expect(elements[2]).toHaveClass("letter--invalid");
+    expect(elements[1]).toHaveClass("letter--valid");
+    expect(elements[2]).toHaveClass("letter--valid");
     expect(elements[3]).toHaveClass("letter--invalid");
-    expect(elements[4]).toHaveClass("letter--invalid");
+    expect(elements[4]).toHaveClass("letter--misplace");
   });
 
   it("renders correct state for unconfirmed letters", () => {
     render(<RootView />);
 
-    userEvent.keyboard("value");
+    userEvent.keyboard("tests");
 
-    const elements = Array.from("value").map((char) =>
-      screen.getByText(char, { selector: "span" })
-    );
+    const elements = Array.from("tests")
+      .map((char) => screen.queryAllByText(char, { selector: "span" }))
+      .reduce((acc, elementArr) => {
+        return [...acc, ...elementArr];
+      }, []);
 
     elements.forEach((element) =>
       expect(element).toHaveClass("letter--current")
+    );
+  });
+
+  it("renders the correct keyboard colors after a guess", () => {
+    render(<RootView />);
+
+    userEvent.keyboard("words");
+    userEvent.keyboard("{Enter}");
+
+    let elements = Array.from("words")
+      .map((char) =>
+        screen.queryAllByText(char, { selector: ".keyboard-button" })
+      )
+      .reduce((acc, elementArr) => {
+        return [...acc, ...elementArr];
+      }, []);
+
+    expect(elements[0]).toHaveClass("keyboard-button--invalid");
+    expect(elements[1]).toHaveClass("keyboard-button--invalid");
+    expect(elements[2]).toHaveClass("keyboard-button--invalid");
+    expect(elements[3]).toHaveClass("keyboard-button--invalid");
+    expect(elements[4]).toHaveClass("keyboard-button--valid");
+
+    userEvent.keyboard("reset");
+    userEvent.keyboard("{Enter}");
+
+    elements = Array.from("reset")
+      .map((char) =>
+        screen.queryAllByText(char, { selector: ".keyboard-button" })
+      )
+      .reduce((acc, elementArr) => {
+        return [...acc, ...elementArr];
+      }, []);
+
+    expect(elements[0]).toHaveClass("keyboard-button--invalid");
+    expect(elements[1]).toHaveClass("keyboard-button--valid");
+    expect(elements[2]).toHaveClass("keyboard-button--valid");
+    expect(elements[3]).toHaveClass("keyboard-button--valid");
+    expect(elements[4]).toHaveClass("keyboard-button--misplace");
+
+    elements = Array.from("zxcvbnm")
+      .map((char) =>
+        screen.queryAllByText(char, { selector: ".keyboard-button" })
+      )
+      .reduce((acc, elementArr) => {
+        return [...acc, ...elementArr];
+      }, []);
+
+    elements.forEach((element) =>
+      expect(element).toHaveClass("keyboard-button--default")
     );
   });
 });

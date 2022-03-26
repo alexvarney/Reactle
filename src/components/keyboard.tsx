@@ -1,3 +1,6 @@
+import { TLetters } from "../utils/constants";
+import { useKeyState } from "../utils/use-key-state";
+
 type IKeyboardCustomItem = {
   key: string;
   display: string;
@@ -34,7 +37,11 @@ const KeyboardRow: React.FC<{
   return (
     <div className="keyboard-row">
       {props.letters.map((letter) => (
-        <KeyboardButton value={letter} onClick={props.onClick} />
+        <KeyboardButton
+          key={typeof letter === "string" ? letter : letter.key}
+          value={letter}
+          onClick={props.onClick}
+        />
       ))}
     </div>
   );
@@ -46,12 +53,7 @@ const KeyboardButton: React.FC<{
 }> = (props) => {
   if (typeof props.value === "string") {
     return (
-      <button
-        onClick={() => props.onClick?.(props.value as string)}
-        className="keyboard-button"
-      >
-        {props.value}
-      </button>
+      <LetterButton onClick={props.onClick} value={props.value as TLetters} />
     );
   }
 
@@ -62,6 +64,22 @@ const KeyboardButton: React.FC<{
       className="keyboard-button keyboard-button--long"
     >
       {props.value.display}
+    </button>
+  );
+};
+
+const LetterButton: React.FC<{
+  value: TLetters;
+  onClick?: TOnClick;
+}> = (props) => {
+  const state = useKeyState(props.value);
+
+  return (
+    <button
+      onClick={() => props.onClick?.(props.value as string)}
+      className={`keyboard-button keyboard-button--${state}`}
+    >
+      {props.value}
     </button>
   );
 };

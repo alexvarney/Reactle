@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useGameContext } from "../utils/use-game-context";
+import { getAllIndexes } from "../utils/get-all-indexes";
 
 type LetterStates = "empty" | "current" | "valid" | "misplace" | "invalid";
 
@@ -27,15 +28,31 @@ export const Letter: React.FC<{ row: number; letter: number }> = ({
 
     if (!isPrevious) return "empty";
 
-    const word = Array.from(state.previous[row]);
+    const guessedWord = Array.from(state.previous[row]);
+    const targetWord = Array.from(state.target);
 
-    if (word[letter] === state.target.charAt(letter)) {
+    const guessedLetter = guessedWord[letter];
+    const targetLetter = targetWord[letter];
+
+    if (targetLetter === guessedLetter) {
       return "valid";
     }
 
-    if (Array.from(state.target).includes(word[letter])) {
+    if (targetWord.includes(guessedLetter)) {
+      //letter is in word but we didn't put it in the right place... we need to determine if we are missing a valid instance of this letter or not -> if we already put the guessed letter in the right place
+
+      const validIndexes = getAllIndexes(
+        targetWord,
+        (value) => value === guessedLetter
+      );
+
+      if (validIndexes.every((index) => guessedWord[index] === guessedLetter)) {
+        return "invalid";
+      }
+
       return "misplace";
     }
+
     return "invalid";
   }, [isCurrent, value, state.previous, state.target, isPrevious, letter, row]);
 

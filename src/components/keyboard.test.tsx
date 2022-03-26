@@ -1,15 +1,13 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { ALPHABET } from "../utils/constants";
 import { Keyboard } from "./keyboard";
-import { LOWER_ALPHABET } from "../utils/constants";
 
 describe("Keyboard", () => {
   it("should render each key in the alphabet, plus enter and backspace", () => {
     render(<Keyboard />);
 
-    Array.from(LOWER_ALPHABET).forEach((letter) =>
-      expect(screen.getByText(letter))
-    );
+    Array.from(ALPHABET).forEach((letter) => expect(screen.getByText(letter)));
 
     expect(screen.getByLabelText("Enter")).toBeInTheDocument();
     expect(screen.getByLabelText("Backspace")).toBeInTheDocument();
