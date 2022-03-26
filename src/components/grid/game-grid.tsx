@@ -17,8 +17,8 @@ export const WordRow: React.FC<{ index: number }> = ({ index }) => {
       {Array.from({ length: WORD_LENGTH }).map((_, letterIndex) => (
         <Letter
           key={`${index}-${letterIndex}`}
-          row={index}
-          letter={letterIndex}
+          rowIdx={index}
+          letterIdx={letterIndex}
         />
       ))}
     </div>

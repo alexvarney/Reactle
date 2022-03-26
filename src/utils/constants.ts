@@ -31,3 +31,4 @@ export type TLetters =
   | "z";
 
 export type TKeys = TLetters | "Backspace" | "Enter";
+export type TCompletionState = "incomplete" | "solved" | "failed";

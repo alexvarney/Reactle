@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useRef } from "react";
 import { ALPHABET, TKeys } from "./constants";
 
 export type TKeyEventCallback = (x: TKeys) => void;
@@ -25,6 +25,7 @@ export const useKeyboardListener = (
     const handleCallback = (x: KeyboardEvent) => keyHandler(x.key);
 
     window.addEventListener("keyup", handleCallback);
+
     return () => window.removeEventListener("keyup", handleCallback);
   }, [keyHandler]);
 

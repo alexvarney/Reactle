@@ -19,6 +19,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "generate-words": "cd ./src/utils/words-list/ && node ./find-valid-words.mjs",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

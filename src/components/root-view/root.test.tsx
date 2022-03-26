@@ -148,4 +148,49 @@ describe("Root View", () => {
       expect(element).toHaveClass("keyboard-button--default")
     );
   });
+
+  it("shows the modal when the word is guessed", () => {
+    render(<RootView />);
+    expect(screen.queryByTestId("completion-modal")).not.toBeInTheDocument();
+    userEvent.keyboard("tests");
+    userEvent.keyboard("{Enter}");
+
+    expect(screen.getByTestId("completion-modal")).toBeInTheDocument();
+  });
+
+  it("shows the modal after 6 guesses are submitted", () => {
+    render(<RootView />);
+    expect(screen.queryByTestId("completion-modal")).not.toBeInTheDocument();
+    userEvent.keyboard("react{Enter}");
+    userEvent.keyboard("voids{Enter}");
+    userEvent.keyboard("error{Enter}");
+    userEvent.keyboard("event{Enter}");
+    userEvent.keyboard("modal{Enter}");
+    userEvent.keyboard("value{Enter}");
+    expect(screen.getByTestId("completion-modal")).toBeInTheDocument();
+  });
+
+  it("should not accept keyboard input when modal is open", () => {
+    render(<RootView />);
+    expect(screen.queryByTestId("completion-modal")).not.toBeInTheDocument();
+    userEvent.keyboard("tests{Enter}");
+
+    expect(screen.getByTestId("completion-modal")).toBeInTheDocument();
+
+    userEvent.keyboard("v");
+
+    const selector = ".word-row .letter";
+
+    expect(
+      screen.getByText(/e/i, {
+        selector,
+      })
+    ).toBeInTheDocument();
+
+    expect(
+      screen.queryByText(/v/i, {
+        selector,
+      })
+    ).not.toBeInTheDocument();
+  });
 });

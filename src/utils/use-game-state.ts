@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useMemo } from "react";
 import { useKeyboardListener } from "./use-keyboard-listener";
-import { WORD_LENGTH } from "./constants";
+import { WORD_LENGTH, NUM_GUESSES } from "./constants";
 import VALID_WORDS from "./words-list/valid-words.json";
 
 export interface IGameStateAction {
@@ -13,7 +13,7 @@ export interface IUseGameStateActions {
   handleKeyEvent: (key: string) => void;
 }
 
-interface IGameState {
+export interface IGameState {
   target: string;
   previous: string[];
   current: string;
@@ -64,23 +64,35 @@ const stateReducer = (state: IGameState, action: IGameStateAction) => {
 export const useGameState = () => {
   const [state, dispatch] = useReducer(stateReducer, initialGameState);
 
-  const onKeyUp = useCallback((key: string) => {
-    dispatch({
-      type: "append",
-      value: key.toLowerCase(),
-    });
-  }, []);
+  const isComplete =
+    state.previous.includes(state.target) ||
+    state.previous.length === NUM_GUESSES;
+
+  const onKeyUp = useCallback(
+    (key: string) => {
+      if (!isComplete) {
+        dispatch({
+          type: "append",
+          value: key.toLowerCase(),
+        });
+      }
+    },
+    [isComplete]
+  );
 
   const onBackspace = useCallback(() => {
-    dispatch({ type: "backspace" });
-  }, []);
+    if (!isComplete) dispatch({ type: "backspace" });
+  }, [isComplete]);
   const onEnter = useCallback(() => {
-    dispatch({ type: "confirm" });
-  }, []);
+    if (!isComplete) dispatch({ type: "confirm" });
+  }, [isComplete]);
 
-  const setTarget = useCallback((value: string) => {
-    dispatch({ type: "set-target", value });
-  }, []);
+  const setTarget = useCallback(
+    (value: string) => {
+      if (!isComplete) dispatch({ type: "set-target", value });
+    },
+    [isComplete]
+  );
 
   const handleKeyEvent = useKeyboardListener(onKeyUp, onBackspace, onEnter);
 

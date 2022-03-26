@@ -106,7 +106,8 @@ nav,
 section {
   display: block;
 }
-body {
+body,
+* {
   line-height: 1;
   font-family: "Jost", sans-serif;
 }
