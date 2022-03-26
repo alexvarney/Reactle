@@ -1,6 +1,13 @@
-# Getting Started with Create React App
+# Reactle
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+Reactle #1 (3/6)
+⬛⬛⬛⬛🟨
+🟩⬛⬛🟩⬛
+🟩🟩🟩🟩🟩
+```
+
+A basic Wordle clone written in React/Typescript with a TDD approach.
 
 ## Available Scripts
 
