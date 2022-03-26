@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ALPHABET } from "../utils/constants";
+import { ALPHABET } from "../../utils/constants";
 import { Keyboard } from "./keyboard";
 
 describe("Keyboard", () => {

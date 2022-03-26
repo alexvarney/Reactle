@@ -1,5 +1,5 @@
-import { TLetters } from "../utils/constants";
-import { useKeyState } from "../utils/use-key-state";
+import { TLetters } from "../../utils/constants";
+import { useKeyState } from "../../utils/use-key-state";
 
 type IKeyboardCustomItem = {
   key: string;

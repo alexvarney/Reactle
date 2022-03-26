@@ -110,10 +110,6 @@ header > h1 {
   gap: var(--gap);
 }
 
-/* .keyboard-row:last-child {
-  padding-right: 2.2rem;
-} */
-
 .keyboard-button {
   --base-width: clamp(1.2rem, 6.25vw, 5rem);
 

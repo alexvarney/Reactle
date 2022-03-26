@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useGameContext } from "../utils/use-game-context";
-import { getAllIndexes } from "../utils/get-all-indexes";
+import { useGameContext } from "../../utils/use-game-context";
+import { getAllIndexes } from "../../utils/get-all-indexes";
 
 type LetterStates = "empty" | "current" | "valid" | "misplace" | "invalid";
 

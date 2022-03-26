@@ -1,4 +1,4 @@
-import { NUM_GUESSES, WORD_LENGTH } from "../utils/constants";
+import { NUM_GUESSES, WORD_LENGTH } from "../../utils/constants";
 import { Letter } from "./letter";
 
 export const GameGrid = () => {

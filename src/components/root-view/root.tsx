@@ -1,9 +1,9 @@
 import "./style.css";
 import { useEffect } from "react";
-import { GameGrid } from "../game-grid";
+import GameGrid from "../grid";
 import { useActions } from "../../utils/use-game-context";
 import { getInitialWord } from "../../utils/get-initial-word";
-import { Keyboard } from "../keyboard";
+import Keyboard from "../keyboard";
 const Root = () => {
   const { setTarget, handleKeyEvent } = useActions();
 
