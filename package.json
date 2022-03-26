@@ -45,6 +45,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/dom": "^8.11.4"
+    "@testing-library/dom": "^8.11.4",
+    "lodash": "^4.17.21"
   }
 }
