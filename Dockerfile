@@ -1,12 +1,16 @@
-FROM nginx:alpine
-RUN apk add --update npm
+FROM node:17-alpine as build
+RUN apk add --update yarn
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY . .
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
 
-RUN npm install
+COPY . ./
+RUN yarn build
 
-RUN npm run build
 
-COPY build /usr/share/nginx/html
+FROM nginx:1.21.6-alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
