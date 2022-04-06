@@ -1,3 +1,4 @@
+import "./style.css";
 import { Letter } from "../grid/letter";
 
 const Root = () => {

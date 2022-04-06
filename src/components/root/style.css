@@ -1,0 +1,149 @@
+.container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  box-sizing: border-box;
+
+  padding: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+
+  /* width: 100%;
+  height: 100vh; */
+
+  justify-content: space-between;
+  align-items: center;
+
+  --gray-dark: #282828;
+  --gray-med: #68696e;
+  --gray-light: #dddddd;
+  --light: #f2f2f2;
+  --green: #58b358;
+  --yellow: #bfae11;
+}
+
+header {
+  user-select: none;
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  box-shadow: 0px 0px 30px -3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+header > h1 {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--gray-dark);
+}
+
+.main-grid {
+  height: 100%;
+  max-width: min(80vw, 32rem);
+  aspect-ratio: 5 / 6;
+  display: grid;
+  gap: 0.33rem;
+  align-content: center;
+}
+
+.word-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.33rem;
+}
+
+.letter {
+  border: 3px solid var(--gray-light);
+  border-radius: 3px;
+
+  aspect-ratio: 1;
+  text-align: center;
+  justify-self: stretch;
+  vertical-align: middle;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  text-transform: uppercase;
+
+  color: var(--gray-med);
+  user-select: none;
+}
+
+.letter--current {
+  border: 3px solid var(--gray-med);
+  color: var(--gray-dark);
+
+  transition: all 0.2s;
+}
+
+.letter--valid {
+  color: var(--light);
+  background-color: var(--green);
+  border-color: var(--green);
+}
+.letter--misplace {
+  color: var(--light);
+  background-color: var(--yellow);
+  border-color: var(--yellow);
+}
+.letter--invalid {
+  color: var(--light);
+  background-color: var(--gray-med);
+  border-color: var(--gray-med);
+}
+
+.keyboard-container {
+  --gap: 0.33rem;
+
+  display: flex;
+  margin-top: 1rem;
+
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap);
+}
+
+.keyboard-row {
+  display: flex;
+  gap: var(--gap);
+}
+
+.keyboard-button {
+  --base-width: clamp(1.2rem, 6.25vw, 5rem);
+
+  font-family: "Jost", sans-serif;
+  text-transform: capitalize;
+  font-size: clamp(0.5rem, 3.2vw, 2rem);
+  padding: 1rem 0;
+  width: var(--base-width);
+  text-align: center;
+
+  background-color: var(--gray-light);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--gray-dark);
+  cursor: pointer;
+}
+
+.keyboard-button--long {
+  width: calc(var(--base-width) * 2);
+}
+
+.keyboard-button--valid {
+  background-color: var(--green);
+  color: var(--light);
+}
+.keyboard-button--misplace {
+  background-color: var(--yellow);
+  color: var(--light);
+}
+.keyboard-button--invalid {
+  background-color: var(--gray-med);
+  color: var(--light);
+}
