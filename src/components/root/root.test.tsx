@@ -47,6 +47,8 @@ describe("Root View", () => {
         return [...acc, ...elementArr];
       }, []);
 
+    expect(elements.length).toBeGreaterThan(0);
+
     elements.forEach((element) => expect(element).toHaveClass("letter--valid"));
   });
 
@@ -93,6 +95,8 @@ describe("Root View", () => {
       .reduce((acc, elementArr) => {
         return [...acc, ...elementArr];
       }, []);
+
+    expect(elements.length).toBeGreaterThan(0);
 
     elements.forEach((element) =>
       expect(element).toHaveClass("letter--current")

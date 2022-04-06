@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import RootView from "./components/root-view";
+import RootView from "./components/root";
 import reportWebVitals from "./reportWebVitals";
 import { GameContextProvider } from "./utils/use-game-context";
 
