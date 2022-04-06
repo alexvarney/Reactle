@@ -1,19 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Root from "./root";
-import { GameContextProvider } from "../../utils/use-game-context";
-
-const RootView = () => (
-  <GameContextProvider>
-    <Root />
-  </GameContextProvider>
-);
-
-jest.mock("../../utils/get-initial-word", () => {
-  return {
-    getInitialWord: () => "tests",
-  };
-});
+import RootView from "./root";
 
 describe("Root View", () => {
   it("captures keyboard events and updates state as user types", () => {
@@ -46,6 +33,8 @@ describe("Root View", () => {
       .reduce((acc, elementArr) => {
         return [...acc, ...elementArr];
       }, []);
+
+    expect(elements.length).toBeGreaterThan(0);
 
     elements.forEach((element) => expect(element).toHaveClass("letter--valid"));
   });
@@ -93,6 +82,8 @@ describe("Root View", () => {
       .reduce((acc, elementArr) => {
         return [...acc, ...elementArr];
       }, []);
+
+    expect(elements.length).toBeGreaterThan(0);
 
     elements.forEach((element) =>
       expect(element).toHaveClass("letter--current")
