@@ -1,18 +1,10 @@
 import "./style.css";
-import { Letter } from "../grid/letter";
+import { GameGrid } from "../grid/game-grid";
 
 const Root = () => {
   return (
     <div className="container">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia,
-        enim?
-      </p>
-      <Letter value="A" />
-      <Letter value="B" letterState="current" />
-      <Letter value="C" letterState="misplace" />
-      <Letter value="D" letterState="invalid" />
-      <Letter value="E" letterState="valid" />
+      <GameGrid />
     </div>
   );
 };
