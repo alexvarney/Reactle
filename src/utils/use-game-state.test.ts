@@ -13,6 +13,13 @@ describe("useGameState", () => {
     userEvent.keyboard("{Backspace}");
     expect(result.current.state.current).toEqual("abcd");
   });
+
+  it("should only accept upper and lowercase letters, ignoring symbols and numbers", () => {
+    const { result } = renderHook(() => useGameState());
+    userEvent.keyboard("1234567890!@#$%^&*()" + "abc");
+    expect(result.current.state.current).toEqual("abc");
+  });
+
   it("after exactly 5 characters are input, pressing enter locks the guess and jumps to a new line", () => {
     const { result } = renderHook(() => useGameState());
 

@@ -1,33 +1,13 @@
-import { useEffect, useCallback, useRef } from "react";
-import { ALPHABET, TKeys } from "./constants";
+import { useEffect } from "react";
 
-export type TKeyEventCallback = (x: TKeys) => void;
+export type TKeyEventCallback = (x: string) => void;
 
-export const useKeyboardListener = (
-  onKeyUp: TKeyEventCallback,
-  onBackspace: TKeyEventCallback,
-  onConfirm: TKeyEventCallback
-) => {
-  const keyHandler = useCallback(
-    (key: string) => {
-      if (key === "Backspace") {
-        onBackspace(key);
-      } else if (key === "Enter") {
-        onConfirm(key);
-      } else if (ALPHABET.includes(key.toLowerCase())) {
-        onKeyUp(key.toLowerCase() as TKeys);
-      }
-    },
-    [onKeyUp, onConfirm, onBackspace]
-  );
-
+export const useKeyboardListener = (onKeyUp: TKeyEventCallback) => {
   useEffect(() => {
-    const handleCallback = (x: KeyboardEvent) => keyHandler(x.key);
+    const handleCallback = (x: KeyboardEvent) => onKeyUp(x.key);
 
     window.addEventListener("keyup", handleCallback);
 
     return () => window.removeEventListener("keyup", handleCallback);
-  }, [keyHandler]);
-
-  return keyHandler;
+  }, [onKeyUp]);
 };
