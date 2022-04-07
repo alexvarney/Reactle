@@ -1,16 +1,19 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { useKeyboardListener } from "./use-keyboard-listener";
 import userEvent from "@testing-library/user-event";
+import { ALPHABET } from "./constants";
 
 describe("useKeyboardListener", () => {
-  it("should call the callback function when a key is pressed", () => {
+  it("should call the callback function when any letter is pressed with the key value", () => {
     const fn = jest.fn();
 
     renderHook(() => useKeyboardListener(fn, jest.fn(), jest.fn()));
 
-    userEvent.keyboard("test");
+    userEvent.keyboard(ALPHABET);
 
-    expect(fn).toBeCalledTimes(4);
+    expect(fn).toBeCalledTimes(26);
+
+    Array.from(ALPHABET).forEach((letter) => expect(fn).toBeCalledWith(letter));
   });
 
   it("should only call the callback for upper and lower characters in the latin alphabet", () => {
